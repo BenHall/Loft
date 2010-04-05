@@ -47,6 +47,8 @@
     <Compile Include="CouchDbServerSpecs.cs" />
     <Compile Include="DatabaseSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryResultSpecs.cs" />
+    <Compile Include="TestDocument.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Loft\Loft.csproj">

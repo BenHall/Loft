@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Database.cs" />
     <Compile Include="JsonRequester.cs" />
+    <Compile Include="QueryResult.cs" />
+    <Compile Include="ResultItem.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
