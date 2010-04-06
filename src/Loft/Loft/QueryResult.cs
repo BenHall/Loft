@@ -12,11 +12,19 @@ namespace Loft
 
         public IList<T> Get<T>()
         {
+            return Get<T>(string.Empty);
+        }
+
+        public IList<T> Get<T>(string type)
+        {
             var list = new List<T>();
             foreach (var resultItem in Items)
             {
-                string cleaned = CleanJson(resultItem.Value);
-                list.Add(JsonConvert.DeserializeObject<T>(cleaned));
+                if (string.IsNullOrEmpty(type) || resultItem.Value.Contains("\"type\": \"" + type + "\""))
+                {
+                    string cleaned = CleanJson(resultItem.Value);
+                    list.Add(JsonConvert.DeserializeObject<T>(cleaned));
+                }
             }
 
             return list;

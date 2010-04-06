@@ -30,5 +30,18 @@ namespace Loft.Specs
             Assert.Equal("value", documents[0].Test);
             Assert.Equal("Document 2", documents[1].Test);
         }
+
+        [Fact]
+        public void Get_As_TestDocument_should_only_return_type_specified()
+        {
+            QueryResult results = database.Query("specs", "query_design_document_multiple");
+            IList<TestDocument> testDocuments = results.Get<TestDocument>("QueryDesignDocumentSpec");
+            Assert.Equal("value", testDocuments[0].Test);
+            Assert.Equal("Document 2", testDocuments[1].Test);
+
+            IList<TestDocument> test2Documents = results.Get<TestDocument>("QueryDesignDocumentSpec2");
+            Assert.Equal("Document 3", test2Documents[0].Test);
+            Assert.Equal("value 2", test2Documents[1].Test);
+        }
     }
 }
