@@ -44,8 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
+    <Compile Include="IDatabase.cs" />
+    <Compile Include="IRequester.cs" />
     <Compile Include="JsonRequester.cs" />
     <Compile Include="QueryResult.cs" />
+    <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="ResultItem.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

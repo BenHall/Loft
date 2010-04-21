@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using Newtonsoft.Json.Linq;
 
 namespace Loft
