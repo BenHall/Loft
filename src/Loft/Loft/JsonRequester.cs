@@ -32,9 +32,22 @@ namespace Loft
         private Stream MakeRequest(Server server, string endpoint, string verb, string data)
         {
             var request = (HttpWebRequest)WebRequest.Create(string.Format("http://{0}:{1}/{2}", server.Host, server.Port, endpoint));
-            request.Method = verb; 
+            request.Method = verb;
+            
+            if(!string.IsNullOrEmpty(data))
+                WriteData(request.GetRequestStream(), data);
+
             var response = (HttpWebResponse)request.GetResponse();
             return response.GetResponseStream();
+        }
+
+        private void WriteData(Stream requestStream, string data)
+        {
+            System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding(); 
+            byte[] dataAsBytes = encoding.GetBytes(data);
+            Stream dataStream = requestStream;
+            dataStream.Write(dataAsBytes, 0, dataAsBytes.Length);
+            dataStream.Close();
         }
     }
 }
