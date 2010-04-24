@@ -4,7 +4,7 @@ namespace Loft
 {
     public interface IRequester
     {
-        JObject Get(Server server, string endpoint);
-        JObject Put(Server server, string endpoint, string data);
+        JContainer Get(Server server, string endpoint);
+        JContainer Put(Server server, string endpoint, string data);
     }
 }

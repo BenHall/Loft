@@ -48,7 +48,7 @@ namespace Loft
         public string GetVersion()
         {
             JsonRequester requester = new JsonRequester();
-            JObject json = requester.Get(this, "");
+            JContainer json = requester.Get(this, "");
 
             return json.Value<string>("version");
         }

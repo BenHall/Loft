@@ -6,13 +6,13 @@ namespace Loft
 {
     public class JsonRequester : IRequester
     {
-        public JObject Get(Server server, string endpoint)
+        public JContainer Get(Server server, string endpoint)
         {
             Stream stream = MakeRequest(server, endpoint, "GET", string.Empty);
             return GetResponseJson(stream);
         }
 
-        public JObject Put(Server server, string endpoint, string data)
+        public JContainer Put(Server server, string endpoint, string data)
         {
             Stream stream = MakeRequest(server, endpoint, "PUT", data);
             return GetResponseJson(stream);            

@@ -4,25 +4,34 @@ using Newtonsoft.Json.Linq;
 
 namespace Loft.Specs
 {
-    class StubRequester : IRequester
+    public class StubRequester : IRequester
     {
-        Dictionary<string, JObject> Dictionary = new Dictionary<string, JObject>();
+        Dictionary<string, JContainer> Objects = new Dictionary<string, JContainer>();
         public void ReturnThis(string endpoint, string result)
         {
-            Dictionary.Add(endpoint, JObject.Parse(result));
+            if (Objects.ContainsKey(endpoint))
+                Objects.Remove(endpoint);
+
+            JContainer value = null;
+            if (result.StartsWith("["))
+                value = JArray.Parse(result);
+            else
+                value = JObject.Parse(result);
+
+            Objects.Add(endpoint, value);
         }
 
-        public JObject Get(Server server, string endpoint)
+        public JContainer Get(Server server, string endpoint)
         {
-            if(Dictionary.ContainsKey(endpoint))
-                return Dictionary[endpoint];
+            if(Objects.ContainsKey(endpoint))
+                return Objects[endpoint];
 
             throw new MissingFieldException("Missing " + endpoint);
         }
 
-        public JObject Put(Server server, string endpoint, string data)
+        public JContainer Put(Server server, string endpoint, string data)
         {
-            return Dictionary[endpoint];
+            return Objects[endpoint];
         }
     }
 }

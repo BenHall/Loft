@@ -25,7 +25,7 @@ namespace Loft.Specs
             stubServer.DefineCustomResponse("GET", "/", "{\"ok\": true}");   
 
             JsonRequester requester = new JsonRequester();
-            JObject jObject = requester.Get(new Server("localhost", 5984), "/");
+            JContainer jObject = requester.Get(new Server("localhost", 5984), "/");
             Assert.True(jObject["ok"].Value<bool>());
         }
 
@@ -35,7 +35,7 @@ namespace Loft.Specs
             stubServer.DefineCustomResponse("PUT", "/", "{\"ok\": true}");
 
             JsonRequester requester = new JsonRequester();
-            JObject jObject = requester.Put(new Server("localhost", 5984), "/", "");
+            JContainer jObject = requester.Put(new Server("localhost", 5984), "/", "");
             Assert.True(jObject["ok"].Value<bool>());
         }
     }
