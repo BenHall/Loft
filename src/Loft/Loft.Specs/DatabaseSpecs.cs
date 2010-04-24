@@ -51,6 +51,24 @@ namespace Loft.Specs
             QueryResult results = database.Query("specs", "query_design_document1");
             Assert.Equal(2, results.Items.Count);
         }
+
+        [Fact]
+        public void QueryDesignDocument_with_one_parameter_should_include_parameter_in_query()
+        {
+            requester.ReturnThis("testdb1/_design/specs/_view/query_design_document1?key=\"2009/01/01 00:00:00\"", "{\"total_rows\":1,\"offset\":0,\"rows\":[{\"id\":\"1f2dfc89e8df7092bd92b31be3000cf0\",\"key\":null,\"value\":{\"_id\":\"1f2dfc89e8df7092bd92b31be3000cf0\",\"rev\":\"1-71112dee2e9ce973e92ec27c5ef3c33e\",\"test\":\"value\",\"type\":\"QueryDesignDocumentSpec\"}}]}");
+
+            QueryResult results = database.Query("specs", "query_design_document1", new Dictionary<string, string> { { "key", "2009/01/01 00:00:00" } });
+            Assert.Equal(1, results.Items.Count);
+        }
+
+        [Fact]
+        public void QueryDesignDocument_with_two_parameters_should_include_parameters_in_query()
+        {
+            requester.ReturnThis("testdb1/_design/specs/_view/query_design_document1?startkey=\"2009/01/01 00:00:00\"&endkey=\"2009/02/01 00:00:00\"", "{\"total_rows\":1,\"offset\":0,\"rows\":[{\"id\":\"1f2dfc89e8df7092bd92b31be3000cf0\",\"key\":null,\"value\":{\"_id\":\"1f2dfc89e8df7092bd92b31be3000cf0\",\"rev\":\"1-71112dee2e9ce973e92ec27c5ef3c33e\",\"test\":\"value\",\"type\":\"QueryDesignDocumentSpec\"}}]}");
+
+            QueryResult results = database.Query("specs", "query_design_document1", new Dictionary<string, string> { { "startkey", "2009/01/01 00:00:00" }, { "endkey", "2009/02/01 00:00:00" }});
+            Assert.Equal(1, results.Items.Count);
+        }
     }
 
     public class DatabaseSpecs_Saving : DatabaseSpecs

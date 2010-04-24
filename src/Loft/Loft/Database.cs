@@ -42,15 +42,22 @@ namespace Loft
             result.TotalRows = jObject.Value<int>("total_rows");
             result.Offset = jObject.Value<int>("offset");
 
-            result.Items = new List<ResultItem>();
-
-            JArray rows = jObject["rows"].Value<JArray>();
-            foreach (JToken row in rows)
-            {
-                result.Items.Add(new ResultItem { Id = row.Value<string>("id"), Key = row.Value<string>("key"), Value = row["value"].ToString()});
-            }
+            result.Items = GetItemsFromJsonRows(jObject);
 
             return result;
+        }
+
+        private IList<ResultItem> GetItemsFromJsonRows(JContainer results)
+        {
+            var items = new List<ResultItem>();
+
+            JArray rows = results["rows"].Value<JArray>();
+            foreach (JToken row in rows)
+            {
+                items.Add(new ResultItem { Id = row.Value<string>("id"), Key = row.Value<string>("key"), Value = row["value"].ToString() });
+            }
+
+            return items;
         }
 
         public T Save<T>(T document)
@@ -111,6 +118,24 @@ namespace Loft
         public string GenerateID()
         {
             return Requester.Get(_server, "_uuids")["uuids"].Value<JArray>()[0].Value<string>();
+        }
+
+        public QueryResult Query(string design, string view, Dictionary<string, string> parameters)
+        {
+            string parametersAsString = ConvertDictionaryToParameters(parameters);
+            string viewWithParameters = view + "?" + parametersAsString;
+            return Query(design, viewWithParameters);
+        }
+
+        private string ConvertDictionaryToParameters(Dictionary<string, string> parameters)
+        {
+            List<string> builder = new List<string>();
+            foreach (KeyValuePair<string, string> keyValuePair in parameters)
+            {
+                builder.Add(keyValuePair.Key + "=\"" + keyValuePair.Value + "\"");
+            }
+
+            return string.Join("&", builder.ToArray());
         }
     }
 }
