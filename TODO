@@ -1,0 +1,9 @@
+1) Query parameters to filter on start\end key
+2) Deleting object
+3) Bulk delete objects
+
+
+
+Nice to have:
+1) Bulk refactoring of objects and related documents in the DB
+2) Dynamically switch between FootReST and real server
